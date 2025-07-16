@@ -1,5 +1,7 @@
 package models;
 
+import abstracts.Entity;
+
 public class BoardModel {
     private final char[][] board;
     private final int width;
@@ -26,7 +28,15 @@ public class BoardModel {
 
     }
 
-    public String buildBoard() {
+    public void drawEntity(Entity entity) {
+        for(int i = 0; i < entity.getBody().length; i++) {
+            for(int j = 0; j < entity.getBody()[0].length; j++) {
+                this.board[entity.getY()+i][entity.getX()+j] = entity.getBody()[i][j];
+            }
+        }
+    }
+
+    public String drawBoard() {
         StringBuilder sb = new StringBuilder();
         for(int i = 0; i < this.height; i++) {
             for(int j = 0; j < this.width; j++) {
