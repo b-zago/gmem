@@ -30,7 +30,7 @@ public class PlayerController implements Runnable {
         try {
             Terminal terminal = TerminalBuilder.builder().system(true).build();
             NonBlockingReader reader = terminal.reader();
-            
+
             // Read characters
             int c;
             while (true) {
@@ -44,29 +44,37 @@ public class PlayerController implements Runnable {
                 }
 
                 switch (c) {
-                    //ASCII w
                     case 'w':
-                        this.boardController.clearPrevMovement(model,Directions.UP);
-                        this.model.move(Directions.UP);
-                        this.boardController.drawEntity(model);
+                        if(model.getY() > 1)
+                        {
+                            this.boardController.clearPrevMovement(model,Directions.UP);
+                            this.model.move(Directions.UP);
+                            this.boardController.drawEntity(model);
+                        }
                         break;
-                    //ASCII a
                     case 'a':
-                        this.boardController.clearPrevMovement(model,Directions.LEFT);
-                        this.model.move(Directions.LEFT);
-                        this.boardController.drawEntity(model);
+                        if(model.getX() > 1)
+                        {
+                            this.boardController.clearPrevMovement(model,Directions.LEFT);
+                            this.model.move(Directions.LEFT);
+                            this.boardController.drawEntity(model);
+                        }
                         break;
-                    //ASCII s
                     case 's':
-                        this.boardController.clearPrevMovement(model,Directions.DOWN);
-                        this.model.move(Directions.DOWN);
-                        this.boardController.drawEntity(model);
+                        if(model.getY()+ model.getHeight() < boardController.getBoardHeight()-1)
+                        {
+                            this.boardController.clearPrevMovement(model,Directions.DOWN);
+                            this.model.move(Directions.DOWN);
+                            this.boardController.drawEntity(model);
+                        }
                         break;
-                    //ASCII d
                     case 'd':
-                        this.boardController.clearPrevMovement(model,Directions.RIGHT);
-                        this.model.move(Directions.RIGHT);
-                        this.boardController.drawEntity(model);
+                        if(model.getX()+ model.getWidth() < boardController.getBoardWidth()-1)
+                        {
+                            this.boardController.clearPrevMovement(model,Directions.RIGHT);
+                            this.model.move(Directions.RIGHT);
+                            this.boardController.drawEntity(model);
+                        }
                         break;
                 }
 

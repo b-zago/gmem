@@ -31,6 +31,14 @@ public class BoardModel {
 
     }
 
+    public int getWidth() {
+        return width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
     public void drawEntity(Entity entity) {
         for(int i = 0; i < entity.getBody().length; i++) {
             for(int j = 0; j < entity.getBody()[0].length; j++) {

@@ -26,4 +26,10 @@ public abstract class Entity {
     public char[][] getBody() {
         return body;
     }
+    public int getWidth() {
+        return body[0].length;
+    }
+    public int getHeight() {
+        return body.length;
+    }
 }
