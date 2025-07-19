@@ -15,16 +15,16 @@ public class Main implements Runnable {
     private PlayerController playerController;
 
     public Main() {
-        this.boardController = new BoardController(64,16);
+        this.boardController = new BoardController(32,16);
 
         //example
         char[][] entity = new char[2][2];
         entity[0][0] = 'A';
-        entity[0][1] = 'C';
-        entity[1][0] = 'B';
-        entity[1][1] = 'D';
+        entity[0][1] = 'A';
+        entity[1][0] = 'A';
+        entity[1][1] = 'A';
 
-        this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,250);
+        this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,2);
     }
 
 
@@ -39,8 +39,10 @@ public class Main implements Runnable {
     @Override
     public void run() {
         while (true) {
+
             this.playerController.handleMovement();
             this.boardController.updateBoard();
+
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
