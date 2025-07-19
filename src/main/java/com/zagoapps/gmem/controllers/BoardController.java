@@ -31,19 +31,16 @@ public class BoardController implements Runnable {
         //view.updateBoard(model.getStringBoard());
     }
 
+    public void updateBoard() {
+        view.updateBoard(model.getStringBoard());
+    }
+
     public void clearPrevMovement(Entity entity, Directions direction) {
         model.clearPrevMovement(entity, direction);
     }
 
     public void run() {
-        while (true) {
-            view.updateBoard(model.getStringBoard());
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
+
 
 
 
