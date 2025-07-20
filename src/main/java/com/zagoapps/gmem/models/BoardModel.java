@@ -40,8 +40,8 @@ public class BoardModel {
     }
 
     public void drawEntity(Entity entity) {
-        for(int i = 0; i < entity.getBody().length; i++) {
-            for(int j = 0; j < entity.getBody()[0].length; j++) {
+        for(int i = 0; i < entity.getHeight(); i++) {
+            for(int j = 0; j < entity.getWidth(); j++) {
                 this.board[entity.getY()+i][entity.getX()+j] = entity.getBody()[i][j];
             }
         }
@@ -50,29 +50,29 @@ public class BoardModel {
     public void clearPrevMovement(Entity entity, Directions direction) {
         HashMap<String, Integer> borderIndexes = new HashMap<>();
 
-        borderIndexes.put("bottom", entity.getY()+entity.getBody().length-1);
+        borderIndexes.put("bottom", entity.getY()+entity.getHeight()-1);
         borderIndexes.put("top", entity.getY());
         borderIndexes.put("left", entity.getX());
-        borderIndexes.put("right", entity.getX()+entity.getBody()[0].length-1);
+        borderIndexes.put("right", entity.getX()+entity.getWidth()-1);
 
         switch(direction) {
             case UP:
-                for(int i = 0; i < entity.getBody()[0].length; i++) {
+                for(int i = 0; i < entity.getWidth(); i++) {
                     this.board[borderIndexes.get("bottom")][entity.getX()+i] = ' ';
                 }
                 break;
             case DOWN:
-                for(int i = 0; i < entity.getBody()[0].length; i++) {
+                for(int i = 0; i < entity.getWidth(); i++) {
                     this.board[borderIndexes.get("top")][entity.getX()+i] = ' ';
                 }
                 break;
             case LEFT:
-                for(int i = 0; i < entity.getBody().length; i++) {
+                for(int i = 0; i < entity.getHeight(); i++) {
                     this.board[entity.getY()+i][borderIndexes.get("right")] = ' ';
                 }
                 break;
             case RIGHT:
-                for(int i = 0; i < entity.getBody().length; i++) {
+                for(int i = 0; i < entity.getHeight(); i++) {
                     this.board[entity.getY()+i][borderIndexes.get("left")] = ' ';
                 }
                 break;

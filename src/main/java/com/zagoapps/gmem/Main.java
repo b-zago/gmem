@@ -24,6 +24,7 @@ public class Main implements Runnable {
         entity[1][0] = 'A';
         entity[1][1] = 'A';
 
+        //the more the playerSpeed the slower
         this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,2);
     }
 
