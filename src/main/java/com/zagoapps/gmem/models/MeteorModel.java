@@ -11,6 +11,10 @@ public class MeteorModel extends Entity {
         this.direction = direction;
     }
 
+    public Directions getDirection() {
+        return direction;
+    }
+
     public void move() {
         switch (this.direction) {
             case UP:

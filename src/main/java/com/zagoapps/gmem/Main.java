@@ -1,6 +1,7 @@
 package com.zagoapps.gmem;
 
 import com.zagoapps.gmem.controllers.BoardController;
+import com.zagoapps.gmem.controllers.MeteorController;
 import com.zagoapps.gmem.controllers.PlayerController;
 import com.zagoapps.gmem.models.PlayerModel;
 import org.jline.terminal.Terminal;
@@ -13,6 +14,7 @@ import java.io.IOException;
 public class Main implements Runnable {
     private BoardController boardController;
     private PlayerController playerController;
+    private MeteorController meteorController;
 
     public Main() {
         this.boardController = new BoardController(32,16);
@@ -26,6 +28,7 @@ public class Main implements Runnable {
 
         //the more the playerSpeed the slower
         this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,2);
+        this.meteorController = new MeteorController(boardController, 20);
     }
 
 
@@ -40,7 +43,7 @@ public class Main implements Runnable {
     @Override
     public void run() {
         while (true) {
-
+            this.meteorController.handleMeteors();
             this.playerController.handleMovement();
             this.boardController.updateBoard();
 
