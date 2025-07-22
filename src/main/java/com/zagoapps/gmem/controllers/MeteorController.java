@@ -9,16 +9,22 @@ import java.util.Queue;
 
 public class MeteorController {
     private boolean shouldSpawn;
+    private boolean shouldMove;
     private int toSpawnCounter;
     private int meteorRate;
+    private int meteorSpeed;
+    private int meteorToMoveCounter;
     private BoardController boardController;
     private ArrayList<MeteorModel> meteors;
 
     private char[][] meteorBody;
 
-    public MeteorController(BoardController boardController, int meteorRate) {
+    public MeteorController(BoardController boardController, int meteorRate, int meteorSpeed) {
         this.meteorRate = meteorRate;
+        this.meteorSpeed = meteorSpeed;
         this.shouldSpawn = true;
+        this.shouldMove = false;
+        this.meteorToMoveCounter = 0;
         this.toSpawnCounter = 0;
         this.boardController = boardController;
         this.meteors = new ArrayList<>();
@@ -30,50 +36,61 @@ public class MeteorController {
     public void handleMeteors() {
 
         //move all meteors and check if any needs to be removed
-        for(int i = meteors.size()-1; i >= 0; i--) {
+        if(shouldMove) {
+            for(int i = meteors.size()-1; i >= 0; i--) {
 
 
-            MeteorModel m = meteors.get(i);
+                MeteorModel m = meteors.get(i);
 
-            boardController.clearPrevMovement(m,m.getDirection());
-            m.move();
+                boardController.clearPrevMovement(m,m.getDirection());
+                m.move();
 
-            switch(m.getDirection()) {
-                case UP:
-                    if(m.getY() == 1) {
-                        meteors.remove(i);
-                        continue;
-                    }
-                    break;
-                case RIGHT:
-                    if(m.getX() == boardController.getBoardWidth()-1) {
-                        meteors.remove(i);
-                        continue;
-                    }
-                    break;
-                case DOWN:
-                    if(m.getY() == boardController.getBoardHeight()-1) {
-                        meteors.remove(i);
-                        continue;
-                    }
-                    break;
-                case LEFT:
-                    if(m.getX() == 1) {
-                        meteors.remove(i);
-                        continue;
-                    }
-                    break;
+                switch(m.getDirection()) {
+                    case UP:
+                        if(m.getY() == 0) {
+                            meteors.remove(i);
+                            continue;
+                        }
+                        break;
+                    case RIGHT:
+                        if(m.getX() == boardController.getBoardWidth()-1) {
+                            meteors.remove(i);
+                            continue;
+                        }
+                        break;
+                    case DOWN:
+                        if(m.getY() == boardController.getBoardHeight()-1) {
+                            meteors.remove(i);
+                            continue;
+                        }
+                        break;
+                    case LEFT:
+                        if(m.getX() == 0) {
+                            meteors.remove(i);
+                            continue;
+                        }
+                        break;
+                }
+
+
+
+                boardController.drawEntity(m);
             }
-
-
-
-            boardController.drawEntity(m);
+            this.shouldMove = false;
         }
+
+        if(this.meteorToMoveCounter == this.meteorSpeed) {
+            this.meteorToMoveCounter = 0;
+            this.shouldMove = true;
+        }
+
 
         if(this.toSpawnCounter == this.meteorRate) {
             this.toSpawnCounter = 0;
             this.shouldSpawn = true;
         }
+
+        this.meteorToMoveCounter++;
 
         if(shouldSpawn) {
             Directions dir = Directions.values()[(int)(Math.random() * Directions.values().length)];

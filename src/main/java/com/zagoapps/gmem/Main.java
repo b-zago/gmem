@@ -28,7 +28,7 @@ public class Main implements Runnable {
 
         //the more the playerSpeed the slower
         this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,2);
-        this.meteorController = new MeteorController(boardController, 20);
+        this.meteorController = new MeteorController(boardController, 20,3);
     }
 
 
