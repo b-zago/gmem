@@ -31,6 +31,9 @@ public class PlayerController implements Runnable {
         inputThread.start();
     }
 
+    public PlayerModel getPlayerModel() {
+        return model;
+    }
 
     public void handleMovement() {
 

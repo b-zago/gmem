@@ -33,6 +33,10 @@ public class MeteorController {
         this.meteorBody[0][0] = '*';
     }
 
+    public ArrayList<MeteorModel> getMeteors() {
+        return meteors;
+    }
+
     public void handleMeteors() {
 
         //move all meteors and check if any needs to be removed

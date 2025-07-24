@@ -3,6 +3,7 @@ package com.zagoapps.gmem;
 import com.zagoapps.gmem.controllers.BoardController;
 import com.zagoapps.gmem.controllers.MeteorController;
 import com.zagoapps.gmem.controllers.PlayerController;
+import com.zagoapps.gmem.models.MeteorModel;
 import com.zagoapps.gmem.models.PlayerModel;
 import org.jline.terminal.Terminal;
 import org.jline.terminal.TerminalBuilder;
@@ -11,7 +12,7 @@ import org.jline.utils.NonBlockingReader;
 import java.io.IOException;
 
 
-public class Main implements Runnable {
+public class Main {
     private BoardController boardController;
     private PlayerController playerController;
     private MeteorController meteorController;
@@ -26,26 +27,29 @@ public class Main implements Runnable {
         entity[1][0] = 'A';
         entity[1][1] = 'A';
 
-        //the more the playerSpeed the slower
+        //the more the speed the slower
         this.playerController = new PlayerController(new PlayerModel(5,5,entity),this.boardController,2);
-        this.meteorController = new MeteorController(boardController, 20,3);
+        this.meteorController = new MeteorController(this.boardController, 20,3);
     }
 
 
     public static void main(String[] args) {
         Main game = new Main();
 
-        Thread gameThread = new Thread(game);
-        gameThread.start();
-    }
+        boolean running = true;
 
-    //game loop
-    @Override
-    public void run() {
-        while (true) {
-            this.meteorController.handleMeteors();
-            this.playerController.handleMovement();
-            this.boardController.updateBoard();
+        while (running) {
+
+            for(MeteorModel m : game.meteorController.getMeteors()) {
+                if(game.boardController.checkCollision(game.playerController.getPlayerModel(), m)) {
+                    running = false;
+                    break;
+                }
+            }
+
+            game.meteorController.handleMeteors();
+            game.playerController.handleMovement();
+            game.boardController.updateBoard();
 
             try {
                 Thread.sleep(50);
@@ -54,5 +58,10 @@ public class Main implements Runnable {
             }
         }
 
+        System.out.println("Game over");
+
+
     }
+
+
 }

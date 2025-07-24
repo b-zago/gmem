@@ -5,7 +5,7 @@ import com.zagoapps.gmem.enums.Directions;
 import com.zagoapps.gmem.models.BoardModel;
 import com.zagoapps.gmem.views.BoardView;
 
-public class BoardController implements Runnable {
+public class BoardController {
     private BoardModel model;
     private BoardView view;
 
@@ -14,8 +14,6 @@ public class BoardController implements Runnable {
         this.model = new BoardModel(width, height);
         this.view = new BoardView(this.model.getStringBoard());
 
-        Thread boardThread = new Thread(this);
-        boardThread.start();
     }
 
     public int getBoardWidth() {
@@ -28,7 +26,6 @@ public class BoardController implements Runnable {
 
     public void drawEntity(Entity entity) { //this is cool
         model.drawEntity(entity);
-        //view.updateBoard(model.getStringBoard());
     }
 
     public void updateBoard() {
@@ -39,10 +36,8 @@ public class BoardController implements Runnable {
         model.clearPrevMovement(entity, direction);
     }
 
-    public void run() {
-
-
-
-
+    public boolean checkCollision(Entity entity1, Entity entity2) {
+        return model.checkCollision(entity1, entity2);
     }
+
 }
